@@ -96,7 +96,9 @@ class LknFraudDetectionForWoocommerce {
 	 * @since    1.0.0
 	 * @access   private
 	 */
+	public $LknFraudDetectionForWoocommerceHelperClass;
 	private function load_dependencies() {
+		$this->LknFraudDetectionForWoocommerceHelperClass = new LknFraudDetectionForWoocommerceHelper();
 		$this->loader = new LknFraudDetectionForWoocommerceLoader();
 	}
 
@@ -131,6 +133,9 @@ class LknFraudDetectionForWoocommerce {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
+		$this->loader->add_filter( 'woocommerce_settings_tabs_array', $this->LknFraudDetectionForWoocommerceHelperClass, 'addSettingTab', 50 );
+		$this->loader->add_action( 'woocommerce_settings_tabs_anti_fraud', $this->LknFraudDetectionForWoocommerceHelperClass, 'showSettingTabContent' );
+		$this->loader->add_action( 'woocommerce_update_options_anti_fraud', $this->LknFraudDetectionForWoocommerceHelperClass, 'saveSettings' );
 	}
 
 	/**
