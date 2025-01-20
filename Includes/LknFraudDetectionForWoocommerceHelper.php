@@ -4,6 +4,15 @@ namespace Lkn\FraudDetectionForWoocommerce\Includes;
 class LknFraudDetectionForWoocommerceHelper {
 
 	public function addSettingTab( $tabs ) {
+		wp_enqueue_script( 'lknFraudDetectionForWoocommerceAdminSettings', FRAUD_DETECTION_FOR_WOOCOMMERCE_DIR_URL . 'Admin/js/lknFraudDetectionForWoocommerceAdminSettings.js', array( 'jquery' ), FRAUD_DETECTION_FOR_WOOCOMMERCE_VERSION, false );
+		wp_enqueue_style( 'lknFraudDetectionForWoocommerceAdminSettings', FRAUD_DETECTION_FOR_WOOCOMMERCE_DIR_URL . 'Admin/css/lknFraudDetectionForWoocommerceAdminSettings.css', array(), FRAUD_DETECTION_FOR_WOOCOMMERCE_VERSION, 'all' );
+		$slug = 'lknFraudDetectionForWoocommerce';
+
+		wp_localize_script('lknFraudDetectionForWoocommerceAdminSettings', 'lknFraudDetectionVariables', array(
+            'enableRecaptcha' => get_option($slug . 'EnableRecaptcha', 'no'),
+			'recaptchaSelected' => get_option($slug . 'RecaptchaSelected'),
+			'googleRecaptchaText' => __('Gerar chaves do Google Recaptcha V3.', 'meu-plugin'),
+        ));
 		$tabs['anti_fraud'] = __( 'Antifraude', 'meu-plugin' );
 		return $tabs;
 	}
@@ -19,36 +28,65 @@ class LknFraudDetectionForWoocommerceHelper {
 	}
 	
 	private function getSettings() {
+		$slug = 'lknFraudDetectionForWoocommerce';
+
 		$settingsFields = array(
-			'section_title' => array(
+			'sectionTitle' => array(
 				'type'     => 'title',
 			),
-			'campo_texto' => array(
-				'name'     => __( 'Campo de Texto', 'meu-plugin' ),
-				'type'     => 'text',
-				'desc'     => __( 'Descrição para o campo de texto.', 'meu-plugin' ),
-				'id'       => 'meu_plugin_campo_texto',
-				'default'  => 'Valor padrão',
-				'description' => __('Your Maxipago Merchant ID.', 'woo-rede'),
-                'default' => '',
-                'desc_tip' => true,
-			),
-			'checkbox_exemplo' => array(
-				'name'     => __( 'Habilitar Google reCAPTCHA', 'meu-plugin' ),
+			$slug . 'EnableRecaptcha' => array(
+				'name'     => __( 'Habilitar reCAPTCHA', 'meu-plugin' ),
 				'type'     => 'checkbox',
-				'desc'     => __( 'Ative para habilitar o recaptcha durante o checkout. Gere as chaves do Recaptcha V3 aqui.', 'meu-plugin' ),
-				'id'       => 'meu_plugin_checkbox_exemplo',
-				'description' => __('By disabling this feature, the plugin will be loaded during the checkout process. This feature, when enabled, prevents infinite loading errors on the checkout page. Only disable it if you are experiencing difficulties with the gateway loading.', 'woo-rede'),
+				'desc'     => __( 'Ative para habilitar o recaptcha durante o checkout.', 'meu-plugin' ),
+				'id'       => $slug . 'EnableRecaptcha',
+				'default'  => 'no',
+			),
+			$slug . 'RecaptchaSelected' => array(
+				'title'    => esc_attr__( 'Versão do recaptcha', 'rede-for-woocommerce-pro' ),
+				'type'     => 'select',
+				'default'  => 'googleRecaptcha',
+				'id' 	   => $slug . 'RecaptchaSelected',
+				'options'  => array(
+					'googleRecaptchaV3' => 'Google Recaptcha V3',
+				),
+			),
+			$slug . 'googleRecaptchaV3Key' => array(
+				'name'     => __( 'Chave Recaptcha do site', 'meu-plugin' ),
+				'type'     => 'text',
+				'desc'     => __( 'Chave do serviço Google Recaptcha V3.', 'meu-plugin' ),
+				'id'       => $slug . 'googleRecaptchaV3Key',
                 'desc_tip' => true,
 			),
-			'section_end' => array(
-				'type' => 'sectionend',
-				'id'   => 'meu_plugin_section_end',
+			$slug . 'googleRecaptchaV3Secret' => array(
+				'name'     => __( 'Chave Recaptcha secreta', 'meu-plugin' ),
+				'type'     => 'text',
+				'desc'     => __( 'Chave secreta do Google Recaptcha V3.', 'meu-plugin' ),
+				'id'       => $slug . 'googleRecaptchaV3Secret',
+                'desc_tip' => true,
+			),
+			$slug . 'googleRecaptchaV3Score' => array(
+				'name'     => __( 'Score mínimo', 'meu-plugin' ),
+				'type'     => 'number',
+				'desc'     => __( 'O score mínimo validado pelo Recaptcha para que o pagamento seja aceito. Varia entre 0 e 10.', 'meu-plugin' ),
+				'id'       => $slug . 'googleRecaptchaV3Score',
+                'desc_tip' => true,
+				'default'  => '5',
+				'custom_attributes' => array(
+					'min'  => '0',
+					'step' => '1',
+				),
+			),
+			'sectionEnd' => array(
+				'type' => 'sectionend'
 			)
 		);
 
 
 		
 		return $settingsFields;
+	}
+
+	public function validatePayment(){
+		
 	}
 }
