@@ -17,7 +17,7 @@ namespace Lkn\FraudDetectionForWoocommerce\Includes;
 use Lkn\FraudDetectionForWoocommerce\Admin\LknFraudDetectionForWoocommerceAdmin;
 use Lkn\FraudDetectionForWoocommerce\PublicView\LknFraudDetectionForWoocommercePublic;
 use Automattic\WooCommerce\StoreApi\Utilities\NoticeHandler;
-
+use Exception;
 
 /**
  * The core plugin class.
@@ -154,58 +154,9 @@ class LknFraudDetectionForWoocommerce {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-		/* add_action(
-			'woocommerce_rest_checkout_process_payment_with_context',
-			function (  $context, $result ) {
-				add_option('woocommerce_api_payment MEU' . uniqid());
-				if ( $result->status ) {
-					return;
-				}
+		$this->loader->add_action( 'enqueue_block_assets', $this->LknFraudDetectionForWoocommerceHelperClass, 'enqueueRecaptchaScripts');
+		$this->loader->add_action( 'woocommerce_rest_checkout_process_payment_with_context', $this->LknFraudDetectionForWoocommerceHelperClass, 'processPayments', 1, 2 );
 
-				// phpcs:ignore WordPress.Security.NonceVerification
-				$post_data = $_POST;
-
-				// Set constants.
-				wc_maybe_define_constant( 'WOOCOMMERCE_CHECKOUT', true );
-
-				// Add the payment data from the API to the POST global.
-				$_POST = $context->payment_data;
-
-				// Call the process payment method of the chosen gateway.
-				$payment_method_object = $context->get_payment_method_instance();
-
-				if ( ! $payment_method_object instanceof \WC_Payment_Gateway ) {
-					return;
-				}
-
-				$payment_method_object->validate_fields();
-
-				// If errors were thrown, we need to abort.
-				NoticeHandler::convert_notices_to_exceptions( 'woocommerce_rest_payment_error' );
-
-				// Process Payment.
-				$gateway_result = $payment_method_object->process_payment( $context->order->get_id() );
-
-				// Restore $_POST data.
-				$_POST = $post_data;
-
-				// If `process_payment` added notices, clear them. Notices are not displayed from the API -- payment should fail,
-				// and a generic notice will be shown instead if payment failed.
-				wc_clear_notices();
-
-				// Handle result. If status was not returned we consider this invalid and return failure.
-				$result_status = $gateway_result['result'] ?? 'failure';
-				// These are the same statuses supported by the API and indicate processing status. This is not the same as order status.
-				$valid_status = array( 'success', 'failure', 'pending', 'error' );
-				$result->set_status( in_array( $result_status, $valid_status, true ) ? $result_status : 'failure' );
-
-				// set payment_details from result.
-				$result->set_payment_details( array_merge( $result->payment_details, $gateway_result ) );
-				$result->set_redirect_url( $gateway_result['redirect'] );
-			},
-			999, // Prioridade alta para garantir que seu código execute antes do `process_payment`
-			2
-		); */
 	}
 
 	/**
