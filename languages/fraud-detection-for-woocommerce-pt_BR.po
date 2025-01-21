@@ -1,0 +1,75 @@
+msgid "Fraud Detection for WooCommerce"
+msgstr "Detecção de fraudes para WooCommerce"
+
+msgid "https://https://www.linknacional.com.br/wordpress/givewp"
+msgstr "https://https://www.linknacional.com.br/wordpress/givewp"
+
+msgid "This is a description of the plugin."
+msgstr "This is a description of the plugin."
+
+msgid "Link Nacional"
+msgstr "Link Nacional"
+
+msgid "https://linknacional.com.br/"
+msgstr "https://linknacional.com.br/"
+
+msgid "Generate Google Recaptcha V3 keys."
+msgstr "Gerar chaves do Google Recaptcha V3."
+
+msgid "Antifraud"
+msgstr "Antifraude"
+
+msgid "Enable reCAPTCHA"
+msgstr "Habilitar reCAPTCHA"
+
+msgid "Enable to activate reCAPTCHA during checkout."
+msgstr "Ative para habilitar o recaptcha durante o checkout."
+
+msgid "ReCAPTCHA version"
+msgstr "Versão do recaptcha"
+
+msgid "Site Recaptcha Key"
+msgstr "Chave Recaptcha do site"
+
+msgid "Google Recaptcha V3 service key."
+msgstr "Chave do serviço Google Recaptcha V3."
+
+msgid "Secret Recaptcha Key"
+msgstr "Chave secreta do Recaptcha"
+
+msgid "Google Recaptcha V3 secret key."
+msgstr "Chave secreta do Google Recaptcha V3."
+
+msgid "Minimum score"
+msgstr "Pontuação mínima"
+
+msgid ""
+"The minimum score validated by Recaptcha for the payment to be accepted. "
+"Ranges from 0 to 1."
+msgstr ""
+"A pontuação mínima validada pelo Recaptcha para que o pagamento seja "
+"aceito. Varia de 0 a 1."
+
+msgid "This site is protected by reCAPTCHA and the"
+msgstr "Este site é protegido pelo reCAPTCHA e pelas"
+
+msgid "Privacy Policy"
+msgstr "Politicas de privaciadade"
+
+msgid "and Google"
+msgstr "e os"
+
+msgid "Terms of Service"
+msgstr "Termos de Serviço do Google"
+
+msgid "apply."
+msgstr "se aplicam."
+
+msgid "Debug"
+msgstr "Depuração"
+
+msgid "Enable debug logs."
+msgstr "Ativar logs de depuração."
+
+msgid "See logs"
+msgstr "Ver logs"

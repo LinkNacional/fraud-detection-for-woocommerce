@@ -136,8 +136,8 @@ class LknFraudDetectionForWoocommerce {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
 		$this->loader->add_filter( 'woocommerce_settings_tabs_array', $this->LknFraudDetectionForWoocommerceHelperClass, 'addSettingTab', 50 );
-		$this->loader->add_action( 'woocommerce_settings_tabs_anti_fraud', $this->LknFraudDetectionForWoocommerceHelperClass, 'showSettingTabContent' );
-		$this->loader->add_action( 'woocommerce_update_options_anti_fraud', $this->LknFraudDetectionForWoocommerceHelperClass, 'saveSettings' );
+		$this->loader->add_action( 'woocommerce_settings_tabs_lkn_anti_fraud', $this->LknFraudDetectionForWoocommerceHelperClass, 'showSettingTabContent' );
+		$this->loader->add_action( 'woocommerce_update_options_lkn_anti_fraud', $this->LknFraudDetectionForWoocommerceHelperClass, 'saveSettings' );
 		
 	}
 

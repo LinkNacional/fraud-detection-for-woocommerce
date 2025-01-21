@@ -35,5 +35,12 @@
                 };
             });
         }
+
+        formDesc = document.querySelector('.wc-block-checkout__terms.wc-block-checkout__terms--with-separator.wp-block-woocommerce-checkout-terms-block')
+        if(formDesc){
+            const spanElement = document.createElement('span');
+            spanElement.innerHTML = lknFraudDetectionVariables.googleTermsText;
+            formDesc.appendChild(spanElement);
+        }
     })
 })(jQuery)
