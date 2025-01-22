@@ -15,6 +15,10 @@ class LknFraudDetectionForWoocommerceHelper {
             'enableRecaptcha' => get_option($slug . 'EnableRecaptcha', 'no'),
 			'recaptchaSelected' => get_option($slug . 'RecaptchaSelected'),
 			'googleRecaptchaText' => __('Generate Google Recaptcha V3 keys.', 'fraud-detection-for-woocommerce'),
+			'scoreBetween0and3' => __('High likelihood of automated (bot) behavior.', 'fraud-detection-for-woocommerce'),
+			'scoreBetween4and5' => __('Intermediate behavior.', 'fraud-detection-for-woocommerce'),
+			'scoreBetween6and7' => __('Behavior generally human, but with some uncertainty.', 'fraud-detection-for-woocommerce'),
+			'scoreBetween8and10' => __('High likelihood of legitimate human behavior.', 'fraud-detection-for-woocommerce'),
         ));
 		$tabs['lkn_anti_fraud'] = __( 'Antifraud', 'fraud-detection-for-woocommerce' );
 		return $tabs;
@@ -70,7 +74,7 @@ class LknFraudDetectionForWoocommerceHelper {
 			$slug . 'GoogleRecaptchaV3Score' => array(
 				'name'     => __( 'Minimum score', 'fraud-detection-for-woocommerce' ),
 				'type'     => 'number',
-				'desc'     => __( 'The minimum score validated by Recaptcha for the payment to be accepted. Ranges from 0 to 1.', 'fraud-detection-for-woocommerce' ),
+				'desc'     => __( 'The minimum score validated by Recaptcha for the payment to be accepted. Ranges from 0 to 1. It is recommended to use a score above 0.6', 'fraud-detection-for-woocommerce' ),
 				'id'       => $slug . 'GoogleRecaptchaV3Score',
                 'desc_tip' => true,
 				'default'  => '0.5',
@@ -166,14 +170,14 @@ class LknFraudDetectionForWoocommerceHelper {
 			);
 	
 			if(!isset($responseBody['success']) || $responseBody['success'] !== true){
-				throw new Exception('Recaptcha inválido: recaptcha não foi validado.');
+				throw new Exception(__('Invalid recaptcha: recaptcha was not validated.', 'fraud-detection-for-woocommerce'));
 			}
 	
 			// Verificar o score do reCAPTCHA
 			if ($responseBody['score'] < $score) {
 				$context->order->set_status('lkn-fraud');
 				$context->order->save();
-				throw new Exception('Recaptcha inválido: score abaixo do limite.');
+				throw new Exception(__('Invalid recaptcha: score below the limit.', 'fraud-detection-for-woocommerce'));
 			}
 		}
 	}

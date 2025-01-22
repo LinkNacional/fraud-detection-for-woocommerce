@@ -8,32 +8,64 @@
     
             // Cria o elemento <tr>
             const newRow = document.createElement('tr');
-    
-            // Cria o elemento <th> com atributos e o adiciona à nova linha
             const thElement = document.createElement('th');
             thElement.setAttribute('scope', 'row');
             thElement.className = 'titledesc';
             newRow.appendChild(thElement);
     
-            // Cria o elemento <td>
             const tdElement = document.createElement('td');
             tdElement.style.paddingBottom = '0';
     
-            // Cria o elemento <p> e adiciona o texto e estilo
             const aElement = document.createElement('a');
             aElement.href = 'https://www.google.com/recaptcha/admin/';
             aElement.target = '_blank';
             aElement.textContent = lknFraudDetectionVariables.googleRecaptchaText;
             aElement.style.fontSize = '15px';
     
-            // Adiciona o <p> dentro do <td>
             tdElement.appendChild(aElement);
-    
-            // Adiciona o <td> à nova linha
             newRow.appendChild(tdElement);
-    
-            // Insere o novo <tr> após o segundo <tr>
             secondRow.insertAdjacentElement('afterend', newRow);
+            // Criação do segundo <tr> baseado no valor do GoogleRecaptchaV3Score
+            const scoreInput = document.querySelector('#lknFraudDetectionForWoocommerceGoogleRecaptchaV3Score');
+            const scoreRowParent = scoreInput.closest('tr');
+            const newScoreRow = document.createElement('tr');
+            if (scoreInput) {
+
+                const thScore = document.createElement('th');
+                thScore.setAttribute('scope', 'row');
+                thScore.className = 'titledesc';
+                newScoreRow.appendChild(thScore);
+
+                const tdScore = document.createElement('td');
+                const pElement = document.createElement('p');
+                setPElementText(scoreInput.value, pElement);
+                pElement.style.fontSize = '15px';
+                tdScore.style.paddingBottom = '14px';
+                tdScore.style.paddingTop = '0';
+
+                tdScore.appendChild(pElement);
+                newScoreRow.appendChild(tdScore);
+
+                scoreRowParent.insertAdjacentElement('afterend', newScoreRow);
+
+                // Adiciona evento para atualizar o texto do <p> ao alterar o valor do campo
+                scoreInput.addEventListener('input', function () {
+                    setPElementText(this.value, pElement);
+                });
+
+                function setPElementText(inputValue, pElement) {
+                    inputValue = parseFloat(scoreInput.value)
+                    if (inputValue <= 0.3) {
+                        pElement.textContent = lknFraudDetectionVariables.scoreBetween0and3;
+                    } else if (inputValue > 0.3 && inputValue < 0.6) {
+                        pElement.textContent = lknFraudDetectionVariables.scoreBetween4and5;
+                    } else if (inputValue >= 0.6 && inputValue <= 0.7) {
+                        pElement.textContent = lknFraudDetectionVariables.scoreBetween6and7;
+                    } else {
+                        pElement.textContent = lknFraudDetectionVariables.scoreBetween8and10;
+                    }
+                }
+            }
 
 
             // Script para fazer os campos ficarem display none
@@ -60,11 +92,13 @@
                         enableGoogleV3SecretInputTr.style.display = 'table-row';
                         enableGoogleV3ScoreInputTr.style.display = 'table-row';
                         newRow.style.display = 'table-row';
+                        newScoreRow.style.display = 'table-row';
                     } else {
                         enableGoogleV3KeyInputTr.style.display = 'none';
                         enableGoogleV3SecretInputTr.style.display = 'none';
                         enableGoogleV3ScoreInputTr.style.display = 'none';
                         newRow.style.display = 'none';
+                        newScoreRow.style.display = 'none';
                     }
                 
                 })
@@ -84,6 +118,7 @@
                     enableGoogleV3SecretInputTr.style.display = 'table-row';
                     enableGoogleV3ScoreInputTr.style.display = 'table-row';
                     newRow.style.display = 'table-row';
+                    newScoreRow.style.display = 'table-row';
                 }
     
                 function hideRecaptchaFields() {
@@ -92,6 +127,7 @@
                     enableGoogleV3SecretInputTr.style.display = 'none';
                     enableGoogleV3ScoreInputTr.style.display = 'none';
                     newRow.style.display = 'none';
+                    newScoreRow.style.display = 'none';
                 }
             }
         }

@@ -15,7 +15,7 @@
  * @wordpress-plugin
  * Plugin Name:       Fraud Detection for WooCommerce
  * Plugin URI:        https://https://www.linknacional.com.br/wordpress/givewp
- * Description:       This is a description of the plugin.
+ * Description:       Performs verification and prevention of malicious payments.
  * Version:           1.0.0
  * Author:            Link Nacional
  * Author URI:        https://linknacional.com.br/
