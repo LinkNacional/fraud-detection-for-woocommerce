@@ -138,6 +138,8 @@ class LknFraudDetectionForWoocommerce {
 		$this->loader->add_filter( 'woocommerce_settings_tabs_array', $this->LknFraudDetectionForWoocommerceHelperClass, 'addSettingTab', 50 );
 		$this->loader->add_action( 'woocommerce_settings_tabs_lkn_anti_fraud', $this->LknFraudDetectionForWoocommerceHelperClass, 'showSettingTabContent' );
 		$this->loader->add_action( 'woocommerce_update_options_lkn_anti_fraud', $this->LknFraudDetectionForWoocommerceHelperClass, 'saveSettings' );
+		$this->loader->add_filter( 'woocommerce_register_shop_order_post_statuses', $this->LknFraudDetectionForWoocommerceHelperClass, 'createFraudStatus' );
+		$this->loader->add_filter( 'wc_order_statuses', $this->LknFraudDetectionForWoocommerceHelperClass, 'registerFraudStatus' );
 		
 	}
 

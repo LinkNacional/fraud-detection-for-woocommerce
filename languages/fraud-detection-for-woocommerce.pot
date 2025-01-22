@@ -69,3 +69,12 @@ msgstr ""
 
 msgid "apply."
 msgstr ""
+
+msgid "Fraud"
+msgstr ""
+
+msgid "Fraud"
+msgstr ""
+
+msgid "Fraud (%s)"
+msgstr ""

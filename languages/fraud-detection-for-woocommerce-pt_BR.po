@@ -51,10 +51,10 @@ msgstr ""
 "aceito. Varia de 0 a 1."
 
 msgid "This site is protected by reCAPTCHA and the"
-msgstr "Este site é protegido pelo reCAPTCHA e pelas"
+msgstr "Este site é protegido pelo reCAPTCHA e as"
 
 msgid "Privacy Policy"
-msgstr "Politicas de privaciadade"
+msgstr "Políticas de Privacidade"
 
 msgid "and Google"
 msgstr "e os"
@@ -73,3 +73,9 @@ msgstr "Ativar logs de depuração."
 
 msgid "See logs"
 msgstr "Ver logs"
+
+msgid "Fraud"
+msgstr "Fraude"
+
+msgid "Fraud (%s)"
+msgstr "Fraude (%s)"

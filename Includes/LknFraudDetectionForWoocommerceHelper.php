@@ -158,23 +158,21 @@ class LknFraudDetectionForWoocommerceHelper {
 				'info',
 				'processPayments',
 				array(
+					'orderId' => $context->order->get_id(),
 					'url' => 'https://www.google.com/recaptcha/api/siteverify',
 					'body' => $body,
 					'responseBody' => $responseBody
 				)
 			);
 	
-			if(!isset($responseBody['success'])){
-				throw new Exception('Recaptcha inválido: recaptcha não foi validado.');
-			}
-	
-			if ($responseBody['success'] !== true) {
-				$errorCodes = isset($responseBody['error-codes']) ? implode(', ', $responseBody['error-codes']) : 'Desconhecido';
+			if(!isset($responseBody['success']) || $responseBody['success'] !== true){
 				throw new Exception('Recaptcha inválido: recaptcha não foi validado.');
 			}
 	
 			// Verificar o score do reCAPTCHA
 			if ($responseBody['score'] < $score) {
+				$context->order->set_status('lkn-fraud');
+				$context->order->save();
 				throw new Exception('Recaptcha inválido: score abaixo do limite.');
 			}
 		}
@@ -186,4 +184,21 @@ class LknFraudDetectionForWoocommerceHelper {
 			$logger->log($level, $message, $context);
 		}
     }
+
+	function createFraudStatus( $order_statuses ) {
+		$order_statuses['wc-lkn-fraud'] = array(
+		   'label' => __('Fraud', 'fraud-detection-for-woocommerce'),
+		   'public' => true,
+		   'exclude_from_search' => false,
+		   'show_in_admin_all_list' => true,
+		   'show_in_admin_status_list' => true,
+		   'label_count'               => _n_noop('Fraud (%s)', 'Fraud (%s)', 'fraud-detection-for-woocommerce')
+		);
+		return $order_statuses;
+	}
+
+	function registerFraudStatus( $order_statuses ) {
+		$order_statuses['wc-lkn-fraud'] = __('Fraud', 'fraud-detection-for-woocommerce');
+		return $order_statuses;
+	}
 }
