@@ -74,7 +74,7 @@ class LknFraudDetectionForWoocommerceHelper {
 			$slug . 'GoogleRecaptchaV3Score' => array(
 				'name'     => __( 'Minimum score', 'fraud-detection-for-woocommerce' ),
 				'type'     => 'number',
-				'desc'     => __( 'The minimum score validated by Recaptcha for the payment to be accepted. Ranges from 0 to 1. It is recommended to use a score above 0.6', 'fraud-detection-for-woocommerce' ),
+				'desc'     => __( 'The minimum score validated by Recaptcha for the payment to be accepted. Ranges from 0 to 1. It is recommended to use a score above 0.7', 'fraud-detection-for-woocommerce' ),
 				'id'       => $slug . 'GoogleRecaptchaV3Score',
                 'desc_tip' => true,
 				'default'  => '0.5',

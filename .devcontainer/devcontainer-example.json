@@ -17,7 +17,7 @@
             "type": "bind"
         }
     ],
-    "postCreateCommand": "npm install",
+    "postCreateCommand": "composer install",
     "customizations": {
         "vscode": {
             "extensions": [
