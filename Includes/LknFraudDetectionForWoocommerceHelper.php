@@ -139,46 +139,57 @@ class LknFraudDetectionForWoocommerceHelper {
 	public function processPayments($context, $result) {
 		if(get_option('lknFraudDetectionForWoocommerceEnableRecaptcha', 'no') == 'yes'){
 			$_POST = $context->payment_data;
-			$score = (float) get_option('lknFraudDetectionForWoocommerceGoogleRecaptchaV3Score');
 			$recaptchaResponse = $_POST['grecaptchav3response'] ?? null;
-			$body = [
-				'secret'   => get_option('lknFraudDetectionForWoocommerceGoogleRecaptchaV3Secret'),
-				'response' => $recaptchaResponse,
-				'remoteip' => $_SERVER['REMOTE_ADDR']
-			];
-			// Enviar a solicitação de verificação para o Google reCAPTCHA
-			$response = wp_remote_post('https://www.google.com/recaptcha/api/siteverify', [
-				'body' => $body
-			]);
-	
-			// Verificar se ocorreu um erro na requisição
-			if (is_wp_error($response)) {
-				$error_message = $response->get_error_message();
-				throw new Exception('Erro na verificação do reCAPTCHA: ' . $error_message);
-			}
-	
-			$responseBody = json_decode(wp_remote_retrieve_body($response), true);
-			LknFraudDetectionForWoocommerceHelper::regLog(
-				'info',
-				'processPayments',
-				array(
-					'orderId' => $context->order->get_id(),
-					'url' => 'https://www.google.com/recaptcha/api/siteverify',
-					'body' => $body,
-					'responseBody' => $responseBody
-				)
-			);
-	
-			if(!isset($responseBody['success']) || $responseBody['success'] !== true){
-				throw new Exception(__('Invalid recaptcha: recaptcha was not validated.', 'fraud-detection-for-woocommerce'));
-			}
-	
-			// Verificar o score do reCAPTCHA
-			if ($responseBody['score'] < $score) {
-				$context->order->set_status('lkn-fraud');
-				$context->order->save();
-				throw new Exception(__('Invalid recaptcha: score below the limit.', 'fraud-detection-for-woocommerce'));
-			}
+			$this->verifyRecaptcha($recaptchaResponse, $context->order);
+		}
+	}
+
+	public function verifyAjaxRequsets($orderId, $postedData, $order) {
+		if(get_option('lknFraudDetectionForWoocommerceEnableRecaptcha', 'no') == 'yes'){
+			$grecaptchav3response = isset($_POST['grecaptchav3response']) ? $_POST['grecaptchav3response'] : null;
+			$this->verifyRecaptcha($grecaptchav3response, $order);
+		}
+	}
+
+	public function verifyRecaptcha($recaptchaResponse, $order){
+		$score = (float) get_option('lknFraudDetectionForWoocommerceGoogleRecaptchaV3Score');
+		$body = [
+			'secret'   => get_option('lknFraudDetectionForWoocommerceGoogleRecaptchaV3Secret'),
+			'response' => $recaptchaResponse,
+			'remoteip' => $_SERVER['REMOTE_ADDR']
+		];
+		// Enviar a solicitação de verificação para o Google reCAPTCHA
+		$response = wp_remote_post('https://www.google.com/recaptcha/api/siteverify', [
+			'body' => $body
+		]);
+
+		// Verificar se ocorreu um erro na requisição
+		if (is_wp_error($response)) {
+			$error_message = $response->get_error_message();
+			throw new Exception('Erro na verificação do reCAPTCHA: ' . $error_message);
+		}
+
+		$responseBody = json_decode(wp_remote_retrieve_body($response), true);
+		LknFraudDetectionForWoocommerceHelper::regLog(
+			'info',
+			'processPayments',
+			array(
+				'orderId' => $order->get_id(),
+				'url' => 'https://www.google.com/recaptcha/api/siteverify',
+				'body' => $body,
+				'responseBody' => $responseBody
+			)
+		);
+
+		if(!isset($responseBody['success']) || $responseBody['success'] !== true){
+			throw new Exception(__('Invalid recaptcha: recaptcha was not validated.', 'fraud-detection-for-woocommerce'));
+		}
+
+		// Verificar o score do reCAPTCHA
+		if ($responseBody['score'] < $score) {
+			$order->set_status('lkn-fraud');
+			$order->save();
+			throw new Exception(__('Invalid recaptcha: score below the limit.', 'fraud-detection-for-woocommerce'));
 		}
 	}
 

@@ -161,6 +161,7 @@ class LknFraudDetectionForWoocommerce {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 		$this->loader->add_action( 'enqueue_block_assets', $this->LknFraudDetectionForWoocommerceHelperClass, 'enqueueRecaptchaScripts');
 		$this->loader->add_action( 'woocommerce_rest_checkout_process_payment_with_context', $this->LknFraudDetectionForWoocommerceHelperClass, 'processPayments', 1, 2 );
+		$this->loader->add_action( 'woocommerce_checkout_order_processed', $this->LknFraudDetectionForWoocommerceHelperClass, 'verifyAjaxRequsets', 1, 3 );
 
 	}
 
