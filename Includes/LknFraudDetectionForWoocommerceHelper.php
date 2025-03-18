@@ -182,10 +182,28 @@ class LknFraudDetectionForWoocommerceHelper {
 		);
 
 		if(!isset($responseBody['success']) || $responseBody['success'] !== true){
+			$order->set_status('lkn-fraud');
+			$order->save();
 			throw new Exception(__('Invalid recaptcha: recaptcha was not validated.', 'fraud-detection-for-woocommerce'));
 		}
 
 		// Verificar o score do reCAPTCHA
+		if(isset($responseBody['score'])){
+			$orderNote = __("Customer's ANTIFRAUD score:", 'lkn-wc-gateway-cielo') . ' ' . $responseBody['score'];
+			$scoreResponse = $responseBody['score'];
+
+			if ($scoreResponse <= 0.3) {
+				$orderNote =  $orderNote . ' ' . __('High likelihood of automated (bot) behavior.', 'fraud-detection-for-woocommerce');
+			} elseif ($scoreResponse > 0.3 && $scoreResponse < 0.6) {
+				$orderNote =  $orderNote . ' ' . __('Intermediate behavior.', 'fraud-detection-for-woocommerce');
+			} elseif ($scoreResponse >= 0.6 && $scoreResponse <= 0.7) {
+				$orderNote =  $orderNote . ' ' . __('Behavior generally human, but with some uncertainty.', 'fraud-detection-for-woocommerce');
+			} else {
+				$orderNote =  $orderNote . ' ' . __('High likelihood of legitimate human behavior.', 'fraud-detection-for-woocommerce');
+			}
+
+			$order->add_order_note($orderNote);
+		}
 		if ($responseBody['score'] < $score) {
 			$order->set_status('lkn-fraud');
 			$order->save();

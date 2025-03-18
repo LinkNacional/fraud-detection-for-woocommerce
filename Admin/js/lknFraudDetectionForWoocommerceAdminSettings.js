@@ -27,26 +27,12 @@
             secondRow.insertAdjacentElement('afterend', newRow);
             // Criação do segundo <tr> baseado no valor do GoogleRecaptchaV3Score
             const scoreInput = document.querySelector('#lknFraudDetectionForWoocommerceGoogleRecaptchaV3Score');
-            const scoreRowParent = scoreInput.closest('tr');
             const newScoreRow = document.createElement('tr');
             if (scoreInput) {
-
-                const thScore = document.createElement('th');
-                thScore.setAttribute('scope', 'row');
-                thScore.className = 'titledesc';
-                newScoreRow.appendChild(thScore);
-
-                const tdScore = document.createElement('td');
                 const pElement = document.createElement('p');
                 setPElementText(scoreInput.value, pElement);
                 pElement.style.fontSize = '15px';
-                tdScore.style.paddingBottom = '14px';
-                tdScore.style.paddingTop = '0';
-
-                tdScore.appendChild(pElement);
-                newScoreRow.appendChild(tdScore);
-
-                scoreRowParent.insertAdjacentElement('afterend', newScoreRow);
+                scoreInput.parentElement.appendChild(pElement);
 
                 // Adiciona evento para atualizar o texto do <p> ao alterar o valor do campo
                 scoreInput.addEventListener('input', function () {

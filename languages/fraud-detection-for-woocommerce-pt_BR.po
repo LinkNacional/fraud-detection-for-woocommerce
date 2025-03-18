@@ -96,3 +96,6 @@ msgstr "Alta probabilidade de comportamento humano legítimo."
 
 msgid "The minimum score validated by Recaptcha for the payment to be accepted. Ranges from 0 to 1. It is recommended to use a score above 0.7."
 msgstr "A score mínima validado pelo Recaptcha para que o pagamento seja aceito. Varia de 0 a 1. Recomenda-se utilizar uma pontuação acima de 0.7."
+
+msgid "Customer's ANTIFRAUD score:"
+msgstr "Nota ANTIFRAUDE do cliente:"
