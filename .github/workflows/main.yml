@@ -41,15 +41,17 @@ jobs:
         filename: '${{ env.PLUGIN_NAME }}.zip'
         exclusions: '*.git* /*node_modules/* .editorconfig'
 
-    #Upload plugin files to server
-    - name: Send plugin files to server
-      uses: fifsky/ssh-action@master
-      with:
-          command: |
-            mv -f ${{ env.PLUGIN_NAME }}.zip ../../${{ env.PLUGIN_NAME }}.zip
-          host: ${{ secrets.SSH_HOST }}
-          user: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY}}
+    # File upload to server
+    - name: Upload .zip to server
+      uses: easingthemes/ssh-deploy@main
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        ARGS: "-lptgoDz"
+        SOURCE: ./${{ env.PLUGIN_NAME }}.zip
+        EXLUDE: "/.git, /.github, LICENSE.txt, README.md, README.txt, /${{ env.PLUGIN_NAME }}"
+        REMOTE_HOST: ${{ secrets.SSH_HOST }}
+        REMOTE_USER: ${{ secrets.SSH_USER }}
+        TARGET: ./${{ env.PLUGIN_NAME }}.zip
 
     # Update version tag
     - name: Bump version and push tag
