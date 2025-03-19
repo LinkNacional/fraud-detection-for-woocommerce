@@ -51,7 +51,7 @@ jobs:
         EXLUDE: "/.git, /.github, LICENSE.txt, README.md, README.txt, /${{ env.PLUGIN_NAME }}"
         REMOTE_HOST: ${{ secrets.SSH_HOST }}
         REMOTE_USER: ${{ secrets.SSH_USER }}
-        TARGET: ./${{ env.PLUGIN_NAME }}.zip
+        TARGET: ././${{ env.PLUGIN_NAME }}.zip
 
     # Update version tag
     - name: Bump version and push tag
