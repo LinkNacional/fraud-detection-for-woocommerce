@@ -41,6 +41,16 @@ jobs:
         filename: '${{ env.PLUGIN_NAME }}.zip'
         exclusions: '*.git* /*node_modules/* .editorconfig'
 
+    #Upload plugin files to server
+    - name: Send plugin files to server
+      uses: fifsky/ssh-action@master
+      with:
+          command: |
+            mv -f ${{ env.PLUGIN_NAME }}.zip ../../${{ env.PLUGIN_NAME }}.zip
+          host: ${{ secrets.SSH_HOST }}
+          user: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY}}
+
     # Update version tag
     - name: Bump version and push tag
       id: tag_version
