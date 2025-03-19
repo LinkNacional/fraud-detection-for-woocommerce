@@ -37,10 +37,44 @@
         }
 
         formDesc = document.querySelector('.wc-block-checkout__terms.wc-block-checkout__terms--with-separator.wp-block-woocommerce-checkout-terms-block')
+        if(!formDesc){
+            formDesc = document.querySelector('.woocommerce-privacy-policy-text')
+        }
         if(formDesc){
             const spanElement = document.createElement('span');
             spanElement.innerHTML = lknFraudDetectionVariables.googleTermsText;
             formDesc.appendChild(spanElement);
         }
+
+        legacyForm = document.querySelector('.checkout.woocommerce-checkout')
+        if(legacyForm){
+            let originalXHROpen = XMLHttpRequest.prototype.open;
+            let originalXHRSend = XMLHttpRequest.prototype.send;
+          
+            XMLHttpRequest.prototype.open = function (method, url, async, user, password) {
+              this._requestURL = url; // Armazena a URL da requisição
+              originalXHROpen.apply(this, arguments);
+            };
+          
+            XMLHttpRequest.prototype.send = function (body) {
+              if (this._requestURL && this._requestURL.includes('?wc-ajax=checkout')) {
+                let xhr = this; // Armazena referência ao objeto XMLHttpRequest
+          
+                grecaptcha.ready(async () => {
+                  let tokenButton = await grecaptcha.execute(lknFraudDetectionVariables.googleKey, { action: 'submit' });
+          
+                  // Adiciona o token reCAPTCHA ao corpo da requisição
+                  let newBody = new URLSearchParams(body);
+                  newBody.append('grecaptchav3response', tokenButton);
+                  body = newBody.toString();
+          
+                  originalXHRSend.call(xhr, body);
+                });
+              } else {
+                originalXHRSend.apply(this, arguments);
+              }
+            };
+        }
+
     })
 })(jQuery)
