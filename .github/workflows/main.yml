@@ -48,7 +48,7 @@ jobs:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         ARGS: "-lptgoDz"
         SOURCE: ./${{ env.PLUGIN_NAME }}.zip
-        EXLUDE: "/.git, /.github, LICENSE.txt, README.md, README.txt, /${{ env.PLUGIN_NAME }}"
+        EXCLUDE: "/.git, /.github, LICENSE.txt, README.md, README.txt, /${{ env.PLUGIN_NAME }}"
         REMOTE_HOST: ${{ secrets.SSH_HOST }}
         REMOTE_USER: ${{ secrets.SSH_USER }}
         TARGET: ${{secrets.DOWNLOAD_FOLDER}}${{ env.PLUGIN_NAME }}.zip
