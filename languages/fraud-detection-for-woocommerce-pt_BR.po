@@ -1,11 +1,24 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.6\n"
+
 msgid "Fraud Detection for WooCommerce"
-msgstr "Detecção de fraudes para WooCommerce"
+msgstr "Antifraude para WooCommerce"
 
 msgid "https://https://www.linknacional.com.br/wordpress/givewp"
 msgstr "https://https://www.linknacional.com.br/wordpress/givewp"
 
 msgid "This is a description of the plugin."
-msgstr "This is a description of the plugin."
+msgstr "Essa é a descrição do plugin."
 
 msgid "Link Nacional"
 msgstr "Link Nacional"
@@ -50,7 +63,7 @@ msgid "Privacy Policy"
 msgstr "Políticas de Privacidade"
 
 msgid "and Google"
-msgstr "e os"
+msgstr "e Google"
 
 msgid "Terms of Service"
 msgstr "Termos de Serviço do Google"
@@ -73,8 +86,8 @@ msgstr "Fraude"
 msgid "Fraud (%s)"
 msgstr "Fraude (%s)"
 
-msgid "Performs verification and prevention of malicious payments"
-msgstr "Realiza verificação e prevenção de pagamentos maliciosos"
+msgid "Performs verification and prevention of malicious payments."
+msgstr "Realiza verificação e prevenção de pagamentos maliciosos."
 
 msgid "Invalid recaptcha: score below the limit."
 msgstr "Recaptcha inválido: score abaixo do limite."
