@@ -28,30 +28,38 @@ jobs:
         dev: no
 
     # Add plugin files to a root directory
-    - name: Make plugin root directory
-      run: "mkdir $PLUGIN_NAME && mv -t ./$PLUGIN_NAME ./Admin ./Includes ./languages ./Public *.php && cp -r ./vendor ./${{env.PLUGIN_NAME}}/vendor && find ./${{env.PLUGIN_NAME}} -type f -exec chmod 0644 {} + && find ./${{env.PLUGIN_NAME}} -type d -exec chmod 0755 {} + && ls -lah"
+    - name: Prepare plugin folder
+      run: |
+        mkdir -p dist
+        mkdir -p build
+        mv ./Admin ./Includes ./languages ./Public *.php composer.json ./build
+        cp -r vendor build/vendor
+        find ./build -type f -exec chmod 0644 {} +
+        find ./build -type d -exec chmod 0755 {} +
 
-    # Compact plugin as .zip
     - name: Archive Release
       uses: thedoctor0/zip-release@master
       with:
         type: 'zip'
-        path: '${{ env.PLUGIN_NAME }}'
-        directory: '.'
+        path: '.'
+        directory: 'build'
         filename: '${{ env.PLUGIN_NAME }}.zip'
         exclusions: '*.git* /*node_modules/* .editorconfig'
 
-    # File upload to server
-    - name: Upload .zip to server
-      uses: easingthemes/ssh-deploy@main
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        ARGS: "-lptgoDz"
-        SOURCE: ./${{ env.PLUGIN_NAME }}.zip
-        EXCLUDE: "/.git, /.github, LICENSE.txt, README.md, README.txt, /${{ env.PLUGIN_NAME }}"
-        REMOTE_HOST: ${{ secrets.SSH_HOST }}
-        REMOTE_USER: ${{ secrets.SSH_USER }}
-        TARGET: ${{secrets.DOWNLOAD_FOLDER}}${{ env.PLUGIN_NAME }}.zip
+    - name: Move .zip to custom location
+      run: |
+        mv ./build/${{ env.PLUGIN_NAME }}.zip ./dist/
+
+    # File upload to server via FTP
+    - name: Upload .zip to server via FTP
+      uses: SamKirkland/FTP-Deploy-Action@4.3.0
+      with:
+        server: ${{ secrets.FTP_HOST }} # Endereço do servidor FTP
+        port: ${{ secrets.FTP_PORT }}
+        username: ${{ secrets.FTP_USER }} # Usuário FTP
+        password: ${{ secrets.FTP_PASSWORD }} # Senha FTP
+        local-dir: ./dist/ # Diretório local onde o arquivo está
+        server-dir: ./wp/ # Diretório remoto onde o arquivo será enviado
 
     # Update version tag
     - name: Bump version and push tag
