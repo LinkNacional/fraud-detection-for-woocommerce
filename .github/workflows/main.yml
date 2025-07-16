@@ -50,17 +50,6 @@ jobs:
       run: |
         mv ./build/${{ env.PLUGIN_NAME }}.zip ./dist/
 
-    # File upload to server via FTP
-    - name: Upload .zip to server via FTP
-      uses: SamKirkland/FTP-Deploy-Action@4.3.0
-      with:
-        server: ${{ secrets.FTP_HOST }} # Endereço do servidor FTP
-        port: ${{ secrets.FTP_PORT }}
-        username: ${{ secrets.FTP_USER }} # Usuário FTP
-        password: ${{ secrets.FTP_PASSWORD }} # Senha FTP
-        local-dir: ./dist/ # Diretório local onde o arquivo está
-        server-dir: ./wp/ # Diretório remoto onde o arquivo será enviado
-
     # Update version tag
     - name: Bump version and push tag
       id: tag_version
