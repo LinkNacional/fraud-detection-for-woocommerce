@@ -1,4 +1,4 @@
-=== Plugin Name ===
+=== Fraud Detection for WooCommerce ===
 Contributors: (this should be a list of wordpress.org userid's)
 Donate link: https://linknacional.com.br/
 Tags: comments, spam

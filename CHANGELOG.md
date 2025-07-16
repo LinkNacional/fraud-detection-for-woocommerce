@@ -1,3 +1,6 @@
+# 1.1.2 - 07/07/2025
+* Alteração do título do plugin.
+
 # 1.1.1 - 19/03/2025
 * Correção em actions do github.
 
