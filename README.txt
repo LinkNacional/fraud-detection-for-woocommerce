@@ -1,18 +1,7 @@
 === WooCommerce Anti-Fraud with Google reCAPTCHA ===
 Contributors: linknacional
 Donate link: https://www.linknacional.com.br/wordpress/
-Tags: woocommerce, antifraud, recaptcha, checkout, security
-Requires at least: 5.7
-Tested up to: 6.8
-Stable tag: 1.1.3
-Requires PHP: 7.2
-License: GPLv3 or later
-License URI: https://www.gnu.org/licenses/gpl-3.0.html
-
-=== WooCommerce Anti-Fraud with Google reCAPTCHA v3 ===
-Contributors: linknacional
-Donate link: https://www.linknacional.com.br/wordpress/
-Tags: woocommerce, antifraud, recaptcha, checkout, security
+Tags: woocommerce, antifraud, recaptcha, security, fraud
 Requires at least: 5.7
 Tested up to: 6.8
 Stable tag: 1.0.0
@@ -31,7 +20,6 @@ Using **Google reCAPTCHA**, the plugin automatically analyzes user interactions 
 - Integration with **Google reCAPTCHA**;
 - Protects WooCommerce checkout against automated bots and fraudulent activity;
 - Configurable minimum score threshold for human-like behavior detection;
-- Debug mode with logging for advanced troubleshooting;
 - Lightweight and optimized for performance.
 
 **Dependencies**
