@@ -18,7 +18,6 @@ use Lkn\FraudDetectionForWoocommerce\Admin\LknFraudDetectionForWoocommerceAdmin;
 use Lkn\FraudDetectionForWoocommerce\PublicView\LknFraudDetectionForWoocommercePublic;
 use Automattic\WooCommerce\StoreApi\Utilities\NoticeHandler;
 use Exception;
-use Lkn_Puc_Plugin_UpdateChecker;
 
 /**
  * The core plugin class.
@@ -85,7 +84,6 @@ class LknFraudDetectionForWoocommerce {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
-		$this->updater_init();
 
 	}
 
@@ -204,16 +202,6 @@ class LknFraudDetectionForWoocommerce {
 	public function get_version() {
 		return $this->version;
 	}
-
-	private function updater_init() {
-        include_once __DIR__ . '/plugin-updater/plugin-update-checker.php';
-
-        return new Lkn_Puc_Plugin_UpdateChecker(
-            'https://api.linknacional.com/v2/u/?slug=fraud-detection-for-woocommerce',
-            FRAUD_DETECTION_FOR_WOOCOMMERCE_FILE,
-            'fraud-detection-for-woocommerce'
-        );
-    }
 
 	public static function addSettings($plugin_meta, $plugin_file) {
         $new_meta_links['setting'] = sprintf(
