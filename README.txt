@@ -4,7 +4,7 @@ Donate link: https://www.linknacional.com.br/wordpress/
 Tags: woocommerce, antifraud, recaptcha, checkout, security
 Requires at least: 5.7
 Tested up to: 6.8
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 Requires PHP: 7.2
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -85,27 +85,33 @@ You also need valid [Google reCAPTCHA API keys](https://www.google.com/recaptcha
 
 
 == Changelog ==
+= 1.1.3 =
+* Remove plugin updater.
+
 = 1.1.2 =
-* Changed plugin title.
+* Change plugin title.
 
 = 1.1.1 =
-* Fixed GitHub actions.
+* Fix GitHub actions.
 
 = 1.1.0 =
-* Added compatibility with shortcode form.
+* Add compatibility with shortcode form.
 
 = 1.0.0 =
 * Plugin launch with Google reCAPTCHA integration for WooCommerce checkout.
 
 == Upgrade Notice ==
+= 1.1.3 =
+* Remove plugin updater.
+
 = 1.1.2 =
-* Changed plugin title.
+* Change plugin title.
 
 = 1.1.1 =
-* Fixed GitHub actions.
+* Fix GitHub actions.
 
 = 1.1.0 =
-* Added compatibility with shortcode form.
+* Add compatibility with shortcode form.
 
 = 1.0.0 =
 * Plugin launch.

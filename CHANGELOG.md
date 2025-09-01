@@ -1,3 +1,6 @@
+# 1.1.3 - 01/09/2025
+* Removendo plugin updater.
+
 # 1.1.2 - 07/07/2025
 * Alteração do título do plugin.
 
