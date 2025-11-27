@@ -1,4 +1,5 @@
 # fraud-detection-for-woocommerce
+Esse plugin foi movido para o repositorio: https://github.com/LinkNacional/fraud-scam-detection-woocommerce
 
 ## Requisitos e suporte
 - PHP: 7.4
